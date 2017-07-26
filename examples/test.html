@@ -1,0 +1,168 @@
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+  <!-- importing the automatically build module -->
+  <script src="../dist/leapgesturetrigger.js"></script>
+
+  <p>Open Javascript console.</p>
+
+  <script>
+
+    // the foo object is part of our ES6MOD module
+    var lmg = new LeapGestureTrigger.LeapGestureTrigger();
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "allFingerSpread",
+            validator: function( b ){
+              return b;
+            }
+          },
+
+          {
+            method: "handVelocity",
+            validator: function( v ){
+              //console.log( v );
+              var velocityThresh = 150; // mm/sec
+              return (v[0] > velocityThresh || v[2] > velocityThresh) && (v[1] < velocityThresh);
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function(){
+        console.log("hovering big hand");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "point",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "handPitch",
+            validator: function( rad ){
+              return (rad > 0.5);
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function(){
+        console.log("PEW!");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [ // hand 1
+          {
+            method: "openPalm",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "handPitch",
+            validator: function( rad ){
+              return (rad > 0.5);
+            }
+          }
+        ],
+        [ // hand 2
+          {
+            method: "openPalm",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "handPitch",
+            validator: function( rad ){
+              return (rad < 0.5);
+            }
+          }
+        ],
+      ],
+      
+      // callback
+      function(){
+        console.log("BIM!");
+      },
+      
+      {
+        blocking: false
+      }
+    )
+    
+    lmg.addRule(
+      // rule
+      [
+        [ // hand 1
+          {
+            method: "openPalm",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "handPitch",
+            validator: function( rad ){
+              return (rad < 0.5);
+            }
+          }
+        ],
+        [ // hand 2
+          {
+            method: "openPalm",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "handPitch",
+            validator: function( rad ){
+              return (rad > 0.5);
+            }
+          }
+        ],
+      ],
+      
+      // callback
+      function(){
+        console.log("BAM!");
+      },
+      
+      {
+        blocking: false
+      }
+    )
+    
+    
+    lmg.start()
+
+  </script>
+
+</body>
+</html>
