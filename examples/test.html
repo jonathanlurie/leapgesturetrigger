@@ -25,7 +25,7 @@
           },
 
           {
-            method: "handVelocity",
+            method: "palmVelocity",
             validator: function( v ){
               //console.log( v );
               var velocityThresh = 150; // mm/sec
@@ -54,9 +54,14 @@
           },
 
           {
-            method: "handPitch",
-            validator: function( rad ){
-              return (rad > 0.5);
+            method: "palmVelocity",
+            validator: function( v ){
+              var thresh = 300;
+              return (
+                Math.abs( v[0] > thresh ) ||
+                Math.abs( v[1] > thresh ) ||
+                Math.abs( v[2] > thresh )
+              );
             }
           }
         ]
@@ -69,95 +74,29 @@
     )
     
     
-    lmg.addRule(
-      // rule
-      [
-        [ // hand 1
-          {
-            method: "openPalm",
-            validator: function( v ){
-              return v;
-            }
-          },
-
-          {
-            method: "handPitch",
-            validator: function( rad ){
-              return (rad > 0.5);
-            }
-          }
-        ],
-        [ // hand 2
-          {
-            method: "openPalm",
-            validator: function( v ){
-              return v;
-            }
-          },
-
-          {
-            method: "handPitch",
-            validator: function( rad ){
-              return (rad < 0.5);
-            }
-          }
-        ],
-      ],
-      
-      // callback
-      function(){
-        console.log("BIM!");
-      },
-      
-      {
-        blocking: false
-      }
-    )
+    
+    
     
     lmg.addRule(
       // rule
       [
-        [ // hand 1
+        [
           {
-            method: "openPalm",
-            validator: function( v ){
-              return v;
-            }
-          },
-
-          {
-            method: "handPitch",
-            validator: function( rad ){
-              return (rad < 0.5);
+            method: "handRotationAngle",
+            args: [3],
+            validator: function( a ){
+              return (a>0.5);
             }
           }
-        ],
-        [ // hand 2
-          {
-            method: "openPalm",
-            validator: function( v ){
-              return v;
-            }
-          },
-
-          {
-            method: "handPitch",
-            validator: function( rad ){
-              return (rad > 0.5);
-            }
-          }
-        ],
+        ]
       ],
       
       // callback
       function(){
-        console.log("BAM!");
-      },
-      
-      {
-        blocking: false
+        console.log("Big angle!");
       }
     )
+    
     
     
     lmg.start()

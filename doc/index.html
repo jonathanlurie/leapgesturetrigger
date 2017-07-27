@@ -1,0 +1,1158 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>  | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro:400,500,700' rel='stylesheet' type='text/css'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='container'>
+    <div class='clearfix md-mxn2'>
+      <div class='fixed md-show fix-3 overflow-auto max-height-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'></h3>
+          <div class='mb1'><code></code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block field'
+            type='text' />
+          <div id='toc'>
+              <a
+                href='#_getfingertipDistance'
+                class='block bold'>
+                _getfingertipDistance
+              </a>
+              <a
+                href='#_runHalfRule'
+                class='block bold'>
+                _runHalfRule
+              </a>
+              <a
+                href='#_runRule'
+                class='block bold'>
+                _runRule
+              </a>
+              <a
+                href='#_validateRule'
+                class='block bold'>
+                _validateRule
+              </a>
+              <a
+                href='#addRule'
+                class='block bold'>
+                addRule
+              </a>
+              <a
+                href='#allFingerSpread'
+                class='block bold'>
+                allFingerSpread
+              </a>
+              <a
+                href='#allFingersValid'
+                class='block bold'>
+                allFingersValid
+              </a>
+              <a
+                href='#fingerExtended'
+                class='block bold'>
+                fingerExtended
+              </a>
+              <a
+                href='#fingerExtendedCode'
+                class='block bold'>
+                fingerExtendedCode
+              </a>
+              <a
+                href='#fingerExtendedCode2hands'
+                class='block bold'>
+                fingerExtendedCode2hands
+              </a>
+              <a
+                href='#fist'
+                class='block bold'>
+                fist
+              </a>
+              <a
+                href='#grabStrengh'
+                class='block bold'>
+                grabStrengh
+              </a>
+              <a
+                href='#hand'
+                class='block bold'>
+                hand
+              </a>
+              <a
+                href='#handPitch'
+                class='block bold'>
+                handPitch
+              </a>
+              <a
+                href='#handRoll'
+                class='block bold'>
+                handRoll
+              </a>
+              <a
+                href='#handRotationAngle'
+                class='block bold'>
+                handRotationAngle
+              </a>
+              <a
+                href='#handRotationAxis'
+                class='block bold'>
+                handRotationAxis
+              </a>
+              <a
+                href='#handRotationMatrix'
+                class='block bold'>
+                handRotationMatrix
+              </a>
+              <a
+                href='#handTimeVisible'
+                class='block bold'>
+                handTimeVisible
+              </a>
+              <a
+                href='#handTranslationDelta'
+                class='block bold'>
+                handTranslationDelta
+              </a>
+              <a
+                href='#handYaw'
+                class='block bold'>
+                handYaw
+              </a>
+              <a
+                href='#numberOfHands'
+                class='block bold'>
+                numberOfHands
+              </a>
+              <a
+                href='#openPalm'
+                class='block bold'>
+                openPalm
+              </a>
+              <a
+                href='#palmNormal'
+                class='block bold'>
+                palmNormal
+              </a>
+              <a
+                href='#palmPosition'
+                class='block bold'>
+                palmPosition
+              </a>
+              <a
+                href='#palmVelocity'
+                class='block bold'>
+                palmVelocity
+              </a>
+              <a
+                href='#palmWidth'
+                class='block bold'>
+                palmWidth
+              </a>
+              <a
+                href='#peace'
+                class='block bold'>
+                peace
+              </a>
+              <a
+                href='#pinchStrength'
+                class='block bold'>
+                pinchStrength
+              </a>
+              <a
+                href='#pinchStrength2Hands'
+                class='block bold'>
+                pinchStrength2Hands
+              </a>
+              <a
+                href='#pinkyUp'
+                class='block bold'>
+                pinkyUp
+              </a>
+              <a
+                href='#point'
+                class='block bold'>
+                point
+              </a>
+              <a
+                href='#pointAndThumb'
+                class='block bold'>
+                pointAndThumb
+              </a>
+              <a
+                href='#sphereCenter'
+                class='block bold'>
+                sphereCenter
+              </a>
+              <a
+                href='#sphereRadius'
+                class='block bold'>
+                sphereRadius
+              </a>
+              <a
+                href='#three'
+                class='block bold'>
+                three
+              </a>
+              <a
+                href='#thumbUp'
+                class='block bold'>
+                thumbUp
+              </a>
+              <a
+                href='#twoFingersSpread'
+                class='block bold'>
+                twoFingersSpread
+              </a>
+          </div>
+        </div>
+      </div>
+      <div class='fix-margin-3'>
+        <div class='px2'>
+<div class='py1'><section class='py2 clearfix'>
+  <h2 id='_getfingertipDistance' class='mt0'>
+    _getfingertipDistance<span class='gray'>(finger1, finger2)</span>
+  </h2>
+  <p>Get the distance between the tips of two given fingers</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>finger1</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>finger2</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='_runHalfRule' class='mt0'>
+    _runHalfRule<span class='gray'>(halfRule, hand)</span>
+  </h2>
+  <p>[PRIVATE]
+runs a half-rule on a given hand. A half-rule is a single element of a rule (that is an array of size max 2).
+In other words, a rule can be composed of 2 half-rule if it applied to 2 hands.
+Some rules apply only to a single hand, implicitely they are already half-rules encapsulated in an array</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>halfRule</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='_runRule' class='mt0'>
+    _runRule<span class='gray'>(rule, ambidextrousMono)</span>
+  </h2>
+  <p>Run a single rule and tells if it applies or not.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>rule</strong>
+          :
+          <div class='force-inline'>
+            <p>the rule to test</p>
+
+          </div>
+        </li>
+        <li> <strong>ambidextrousMono</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the rule applies, false if not</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='_validateRule' class='mt0'>
+    _validateRule<span class='gray'>(rule)</span>
+  </h2>
+  <p>[PRIVATE]
+Feed it a rule and it will tell if the format is valid</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>rule</strong>
+          :
+          <div class='force-inline'>
+            <p>the rule</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true id the rule is valid</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='addRule' class='mt0'>
+    addRule<span class='gray'>(rule, callback, options)</span>
+  </h2>
+  <p>Add a rule and associate a callback. See the header of this file to know what is a rule.</p>
+<p>Options:</p>
+<ul>
+<li>&quot;name&quot;: String - a name for this rule</li>
+<li>&quot;blocking&quot;: Boolean - if true, won&apos;t try the next rules if this one applies</li>
+<li>&quot;ambidextrousMono&quot;: for single-hand gesture only: can be performed by one
+or the other even though both are showing</li>
+</ul>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>rule</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>callback</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>options</strong>
+            (default <code>{}</code>)
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='allFingerSpread' class='mt0'>
+    allFingerSpread<span class='gray'>(hand)</span>
+  </h2>
+  <p>Return true if the hand is spread</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='allFingersValid' class='mt0'>
+    allFingersValid<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get if all the finger of a given hand are valid</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>a Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if all fingers of this hand are valid</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='fingerExtended' class='mt0'>
+    fingerExtended<span class='gray'>(f)</span>
+  </h2>
+  <p>return true if the given finger is extended</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>f</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='fingerExtendedCode' class='mt0'>
+    fingerExtendedCode<span class='gray'>(hand)</span>
+  </h2>
+  <p>for a given hand, get a code based on what fingers are extended.
+Each extended finger add up to a code to create a unique checksum</p>
+<ul>
+<li>thumb + 1</li>
+<li>index + 2</li>
+<li>middle + 4</li>
+<li>ring + 8</li>
+<li>pinky + 16</li>
+</ul>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>a leap js hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the code</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='fingerExtendedCode2hands' class='mt0'>
+    fingerExtendedCode2hands<span class='gray'>(hand1, hand2)</span>
+  </h2>
+  <p>Same as fingerExtendedCode but works for 2 hands.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand1</strong>
+          :
+          <div class='force-inline'>
+            <p>a leap js hand object</p>
+
+          </div>
+        </li>
+        <li><code>Hand</code> <strong>hand2</strong>
+          :
+          <div class='force-inline'>
+            <p>a leap js hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the code for both hands</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='fist' class='mt0'>
+    fist<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the fist gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='grabStrengh' class='mt0'>
+    grabStrengh<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the grabstrenght of the given hand, in [0, 1]</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the strength</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='hand' class='mt0'>
+    hand<span class='gray'>(hand)</span>
+  </h2>
+  <p>Silly function to get the hand object in a rule validator function</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code>Hand</code></code>
+      :
+      <div class='force-inline'>
+        <p>the same Leapjs Hand instance</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handPitch' class='mt0'>
+    handPitch<span class='gray'>(hand)</span>
+  </h2>
+  <p>Pitch angle in rad</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handRoll' class='mt0'>
+    handRoll<span class='gray'>(hand)</span>
+  </h2>
+  <p>Roll angle in rad</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handRotationAngle' class='mt0'>
+    handRotationAngle<span class='gray'>(hand, frameDelta)</span>
+  </h2>
+  <p>Get the rotation angle of the given hand, from some fram ago (default: 1 frame ago)</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>instance of Leapjs Hand</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code> <strong>frameDelta</strong>
+          :
+          <div class='force-inline'>
+            <p>since how many frames ago do we want this angle</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the angle in rad</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handRotationAxis' class='mt0'>
+    handRotationAxis<span class='gray'>(hand, frameDelta)</span>
+  </h2>
+  <p>Get the rotation axis of the given hand, from some fram ago (default: 1 frame ago)</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>instance of Leapjs Hand</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code> <strong>frameDelta</strong>
+          :
+          <div class='force-inline'>
+            <p>since how many frames ago do we want this rotation axis</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the axis in 3D as [x, y, z]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handRotationMatrix' class='mt0'>
+    handRotationMatrix<span class='gray'>(hand, frameDelta)</span>
+  </h2>
+  <p>Get the rotation matrix of the given hand, from some fram ago (default: 1 frame ago)</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>instance of Leapjs Hand</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code> <strong>frameDelta</strong>
+          :
+          <div class='force-inline'>
+            <p>since how many frames ago do we want this rotation axis</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the 3x3 matrix as a single dimensional array, row major.</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handTimeVisible' class='mt0'>
+    handTimeVisible<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the time this hand is visible</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>time ins seconds</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handTranslationDelta' class='mt0'>
+    handTranslationDelta<span class='gray'>(hand, frameDelta)</span>
+  </h2>
+  <p>Get a distance vector from n frames ago to the current one.
+In case of doubt, maybe just use handVelocity() (which is built-in)</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>frameDelta</strong>
+            (default <code>1</code>)
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='handYaw' class='mt0'>
+    handYaw<span class='gray'>(hand)</span>
+  </h2>
+  <p>Yaw angle in rad</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='numberOfHands' class='mt0'>
+    numberOfHands<span class='gray'></span>
+  </h2>
+  <p>Get the number of hands visible</p>
+
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='openPalm' class='mt0'>
+    openPalm<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the openPalm gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='palmNormal' class='mt0'>
+    palmNormal<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the palm normal</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>normal vector as [x, y, z]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='palmPosition' class='mt0'>
+    palmPosition<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the palm stabilized position</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>position vector as [x, y, z], each in mm from the leap origin</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='palmVelocity' class='mt0'>
+    palmVelocity<span class='gray'>(hand)</span>
+  </h2>
+  <p>The velocity of the palm in mm/s</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>a Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>of velocity along axis [x, y, z]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='palmWidth' class='mt0'>
+    palmWidth<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the average outer width of the hand (not including fingers or thumb) in millimeters</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the width in mm</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='peace' class='mt0'>
+    peace<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the peace gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='pinchStrength' class='mt0'>
+    pinchStrength<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the pinch strenght of the given hand.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>the Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>strenght in [0, 1]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='pinchStrength2Hands' class='mt0'>
+    pinchStrength2Hands<span class='gray'>(hand, hand1, hand2)</span>
+  </h2>
+  <p>Get the pinch strenght of both hands</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>the Leap hand object</p>
+
+          </div>
+        </li>
+        <li> <strong>hand1</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>hand2</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>strenght in [0, 1]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='pinkyUp' class='mt0'>
+    pinkyUp<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the pinkyUp gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='point' class='mt0'>
+    point<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the point gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='pointAndThumb' class='mt0'>
+    pointAndThumb<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the pointAndThumb gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='sphereCenter' class='mt0'>
+    sphereCenter<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get center of the sphere that fits the hand curvature.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>position vector as [x, y, z]</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='sphereRadius' class='mt0'>
+    sphereRadius<span class='gray'>(hand)</span>
+  </h2>
+  <p>Get the sphere radius of the sphere the fits the hand curvature</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leapjs Hand instance</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>the radius in mm</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='three' class='mt0'>
+    three<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the three gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='thumbUp' class='mt0'>
+    thumbUp<span class='gray'>(hand)</span>
+  </h2>
+  <p>Finger interaction.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Hand</code> <strong>hand</strong>
+          :
+          <div class='force-inline'>
+            <p>Leap hand object</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>true if the given hand performs the thumbUp gesture</p>
+
+      </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='twoFingersSpread' class='mt0'>
+    twoFingersSpread<span class='gray'>(f1, f2, distanceMm)</span>
+  </h2>
+  <p>Spread fingers is diferent than extended fingers. Spread mean extended + do not
+touch each other, are distant.
+return true if the fingers are spread, false if not</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code>Finger</code> <strong>f1</strong>
+          :
+          <div class='force-inline'>
+            <p>a finger</p>
+
+          </div>
+        </li>
+        <li><code>Finger</code> <strong>f2</strong>
+          :
+          <div class='force-inline'>
+            <p>another finger</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code> <strong>distanceMm</strong>
+          :
+          <div class='force-inline'>
+            <p>threshold distance in mm, default 30</p>
+
+          </div>
+        </li>
+    </ul>
+</section>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>

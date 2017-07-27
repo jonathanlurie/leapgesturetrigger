@@ -8519,7 +8519,7 @@ NodeConnection.prototype.setupSocket = function() {
 };
 });
 
-var controller$1 = createCommonjsModule(function (module) {
+var controller = createCommonjsModule(function (module) {
 var EventEmitter = events.EventEmitter
   , gestureListener = gesture.gestureListener;
 
@@ -9379,7 +9379,7 @@ var version = {
  * @namespace Leap
  */
 var index = {
-  Controller: controller$1,
+  Controller: controller,
   Frame: frame,
   Gesture: gesture,
   Hand: hand,
@@ -9504,7 +9504,7 @@ var handGesture = [
       
       // the validator takes in argument the returned values of "handVelocity".
       // Each validator must return a boolean. Here, we consider the velocity
-      // along x-axis and return if it's obove a threshold
+      // along x-axis and return if it's above a threshold
       validator: function( v ){
         return v[0] > 10;
       }
@@ -9527,14 +9527,14 @@ class LeapGestureTrigger {
     
     // list of gesture name based on their code
     this._fingerGesture = {
-      point       : 2,  // index finger extended
+      point          : 2,  // index finger extended
       pointAndThumb  : 3,  // index finger and thumb extended
-      peace     : 6,  // index finger and middle finger extended
-      three     : 7,  // thum, index and middle finger extended
-      fist      : 0,  // no finger extended, close fist
-      openPalm  : 31, // all finger extended
-      thumbUp   : 1,  // only thumb extended
-      pinkyUp   : 16, // only the pinky is extended (not sure this one is practical)
+      peace          : 6,  // index finger and middle finger extended
+      three          : 7,  // thum, index and middle finger extended
+      fist           : 0,  // no finger extended, close fist
+      openPalm       : 31, // all finger extended
+      thumbUp        : 1,  // only thumb extended
+      pinkyUp        : 16, // only the pinky is extended (not sure this one is practical)
     };
     
     // rule are combinations of gestures + callback
@@ -9628,6 +9628,11 @@ class LeapGestureTrigger {
         // the validator attribute must be a function
         if( typeof test.validator !== "function" )
           return false;
+          
+        // extra arguments, if preset, must be an array
+        if( "args" in test && !Array.isArray( test.args ))
+          return false;
+          
       }
     }
     
@@ -9707,7 +9712,8 @@ class LeapGestureTrigger {
     // running each test of the half rule
     for(var i=0; i<halfRule.length; i++){
       var test = halfRule[i];
-      var methodReturned = this[ test.method ]( hand );
+      var args = test.args || [];
+      var methodReturned = this[ test.method ]( hand, ...args );
       var validatorReturned = test.validator( methodReturned );
       
       if( !validatorReturned )
@@ -9738,22 +9744,6 @@ class LeapGestureTrigger {
     
   }
   
-  
-  /*
-  _singleHandLoop( hand1 ){
-    //console.log( this.allFingerSpread(hand1) );
-    //console.log( this.twoFingersSpread( hand1.thumb, hand1.indexFinger) );
-    
-    var fingerCode = this.fingerExtendedCode( hand1 );
-    console.log( fingerCode );
-  }
-  
-  
-  _doubleHandLoop( hand1, hand2 ){
-    var fingerCode = this.fingerExtendedCode2hands( hand1, hand2 );
-    console.log( fingerCode );
-  }
-  */
 
   /**
   * Get the distance between the tips of two given fingers
@@ -9907,7 +9897,6 @@ class LeapGestureTrigger {
     }
     
     
-    
     /**
     * Spread fingers is diferent than extended fingers. Spread mean extended + do not
     * touch each other, are distant.
@@ -9961,14 +9950,16 @@ class LeapGestureTrigger {
     * In case of doubt, maybe just use handVelocity() (which is built-in)
     */
     handTranslationDelta( hand, frameDelta = 1 ){
-      return hand.translation( controller.frame(frameDelta) );
+      return hand.translation( this._controller.frame(frameDelta) );
     }
     
     
     /**
-    * @return {Array} 
+    * The velocity of the palm in mm/s
+    * @param {Hand} hand - a Leapjs Hand instance
+    * @return {Array} of velocity along axis [x, y, z]
     */
-    handVelocity( hand ){
+    palmVelocity( hand ){
       return hand.palmVelocity;
     }
     
@@ -9998,13 +9989,35 @@ class LeapGestureTrigger {
     
     
     /**
-    * Get both the rotation axis and the rotation angle
+    * Get the rotation angle of the given hand, from some fram ago (default: 1 frame ago)
+    * @param {Hand} hand - instance of Leapjs Hand
+    * @param {Number} frameDelta - since how many frames ago do we want this angle
+    * @return {Number} the angle in rad
     */
-    handRotation( hand, frameDelta = 1 ){
-      return [
-        hand.rotationAngle( controller.frame(frameDelta) ),
-        hand.rotationAxis( controller.frame(frameDelta) )
-      ]
+    handRotationAngle( hand, frameDelta = 1 ){
+      return hand.rotationAngle( this._controller.frame(frameDelta) )
+    }
+    
+    
+    /**
+    * Get the rotation axis of the given hand, from some fram ago (default: 1 frame ago)
+    * @param {Hand} hand - instance of Leapjs Hand
+    * @param {Number} frameDelta - since how many frames ago do we want this rotation axis
+    * @return {Array} the axis in 3D as [x, y, z]
+    */
+    handRotationAxis( hand, frameDelta = 1 ){
+      return hand.rotationAxis( this._controller.frame(frameDelta) )
+    }
+    
+    
+    /**
+    * Get the rotation matrix of the given hand, from some fram ago (default: 1 frame ago)
+    * @param {Hand} hand - instance of Leapjs Hand
+    * @param {Number} frameDelta - since how many frames ago do we want this rotation axis
+    * @return {Array} the 3x3 matrix as a single dimensional array, row major.
+    */
+    handRotationMatrix( hand, frameDelta = 1 ){
+      return hand.rotationMatrix( this._controller.frame(frameDelta) )
     }
     
     
@@ -10063,6 +10076,89 @@ class LeapGestureTrigger {
         hand2.pinchStrength,
       ]
     }
+    
+    
+    /**
+    * Get the grabstrenght of the given hand, in [0, 1]
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Number} the strength
+    */
+    grabStrengh( hand ){
+      return hand.grabStrength;
+    }
+    
+    
+    /**
+    * Silly function to get the hand object in a rule validator function
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Hand} the same Leapjs Hand instance
+    */
+    hand( hand ){
+      return hand;
+    }
+    
+    
+    /**
+    * Get the palm normal
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Array} normal vector as [x, y, z] 
+    */
+    palmNormal( hand ){
+      return hand.palmNormal;
+    }
+    
+    
+    /**
+    * Get the palm stabilized position
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Array} position vector as [x, y, z], each in mm from the leap origin 
+    */
+    palmPosition( hand ){
+      return hand.stabilizedPalmPosition
+    }
+    
+    
+    /**
+    * Get the average outer width of the hand (not including fingers or thumb) in millimeters
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Number} the width in mm 
+    */
+    palmWidth( hand ){
+      return hand.palmWidth;
+    }
+    
+    
+    /**
+    * Get center of the sphere that fits the hand curvature.
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Array} position vector as [x, y, z]
+    */
+    sphereCenter( hand ){
+      return hand.sphereCenter
+    }
+    
+    
+    /**
+    * Get the sphere radius of the sphere the fits the hand curvature
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Number} the radius in mm
+    */
+    sphereRadius( hand ){
+      return hand.sphereRadius;
+    }
+    
+    
+    /**
+    * Get the time this hand is visible
+    * @param {Hand} hand - Leapjs Hand instance
+    * @return {Number} time ins seconds
+    */
+    handTimeVisible( hand ){
+      return hand.timeVisible
+    }
+    
+    
+    
     
 } /* END of class LeapGestureTrigger */
 
