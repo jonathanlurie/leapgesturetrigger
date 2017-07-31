@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name=keywords  content="coma, separated, keywords" />
+  <meta name=description  content="This is the description" />
+  <meta  property=og:title content="Page Title" />
+  <meta  property=og:description content="This is the description" />
+  <meta  property=og:image content="http://me.jonathanlurie.fr/images/bg.jpg" />
+
+  <title>Three cube</title>
+
+  <!-- <link rel="stylesheet" href="style.css" type="text/css" /> -->
+  
+  <style>
+
+
+  body {
+    margin:0;
+    font-family: 'monospace';
+    font-size: 15px;
+    line-height: 18px;
+    overflow: hidden;
+  }
+
+  a {
+    text-decoration: none;
+    color: #03a9f4;
+    transition: all 0.2s;
+  }
+
+  a:hover {
+    color: #f17878;
+  }
+
+  #info {
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 5px;
+  }
+
+  .logoCorner{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    margin: 10px;
+
+    border-color: rgba(0, 0, 0, 0);
+    border-style: dashed;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+
+  .logoCorner:hover{
+    border-color: #03a9f4;
+  }
+
+
+  </style>
+
+  <script src="../dist/leapgesturetrigger.js"></script>
+  
+  <script src="https://threejs.org/build/three.min.js"></script>
+  <script src='https://threejs.org/examples/js/libs/dat.gui.min.js'></script>
+  <script src='https://threejs.org/examples/js/libs/stats.min.js'></script>
+  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+
+  
+</head>
+<body>
+
+  <div id="info">
+    This is a Three JS sample, <a href="https://github.com/jonathanlurie/starters" target="_blank">fork it on Github!</a>
+  </div>
+
+  <a href="https://github.com/jonathanlurie/starter" target="_blank">
+    <img class="logoCorner" src="http://me.jonathanlurie.fr/starter/images/githublogo.png"/>
+  </a>
+
+
+  <script>
+
+  var gui = null;
+  var guiParam = {};
+  var stats = null;
+  var renderer = null;
+  var scene = null;
+  var camera = null;
+  var container = null;
+  var cameraControls = null;
+  var lmg = new LeapGestureTrigger.LeapGestureTrigger();
+  var handSpheres = [];
+  var handLine = null;
+  
+
+  function initGui(){
+
+    stats = new Stats();
+    document.body.appendChild(stats.dom);
+
+    gui = new dat.GUI();
+
+    // a button to change the color
+    guiParam.changeColor = function(){
+      container.children[0].material.color.r = Math.random();
+      container.children[0].material.color.g = Math.random();
+      container.children[0].material.color.b = Math.random();
+     }
+     gui.add(guiParam, 'changeColor').name('Change color');
+  }
+
+
+  function init(){
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    container = new THREE.Object3D();
+  
+    camera.position.z = 300;
+    camera.position.y = 200;
+    camera.lookAt( new THREE.Vector3(0, 100, 0))
+
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor( 0xEEEEEE, 1 );
+    document.body.appendChild( renderer.domElement );
+
+    
+    var light = new THREE.AmbientLight( 0x555555 ); // soft white light
+    scene.add( light );
+    
+    var light = new THREE.PointLight( 0xffffff, 1, 5000 );
+    light.position.set( 500, 500, 500 );
+    scene.add( light )
+    
+    
+    var orbit = new THREE.OrbitControls( camera, renderer.domElement );
+
+    var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+    var material = new THREE.MeshPhongMaterial({ color: 0xffaaff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, shininess: 0	} );
+    var cube = new THREE.Mesh( geometry, material );
+    container.add( cube );
+
+    //scene.add( container );
+
+    // init the hand that represent the sphere
+    var sphereGeometry = new THREE.SphereGeometry( 10, 32, 32 );
+
+    var leftSphere = new THREE.Mesh(
+      sphereGeometry,
+      new THREE.MeshPhongMaterial( {color: 0xff5544, transparent: true} )
+    );
+    
+    var rightSphere = new THREE.Mesh(
+      sphereGeometry,
+      new THREE.MeshPhongMaterial( {color: 0x4455ff, transparent: true} )
+    );
+
+    handSpheres.push( leftSphere )
+    handSpheres.push( rightSphere )
+
+    scene.add( leftSphere )
+    scene.add( rightSphere );
+    
+    
+    var lineGeometry = new THREE.Geometry();
+    lineGeometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    lineGeometry.vertices.push(new THREE.Vector3(10, 0, 0));
+    handLine = new THREE.Line(
+      lineGeometry,
+      new THREE.LineBasicMaterial({ color: 0x0000ff })
+    );
+    scene.add(handLine);
+
+    initGui();
+  }
+
+
+  function render() {
+    requestAnimationFrame( render );
+    stats.update();
+    renderer.render( scene, camera );
+    //console.log( "RENDER");
+  };
+
+
+  window.addEventListener( 'resize', function () {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }, false );
+
+
+
+  init();
+  render();
+
+  lmg.on( "nothing", function(){
+    handLine.visible = false;
+    handSpheres[ 0 ].material.opacity = 0.1
+    handSpheres[ 1 ].material.opacity = 0.1;
+  })
+
+  
+  lmg.on( "everyFrame", function(){
+    //console.log( "LEAP FRAME");
+  })
+
+
+  
+  lmg.addRule(
+    // rule
+    [
+      [
+        
+        // {
+        //   method: "pinchStrength",
+        //   validator: function( strenght ){
+        //     return (strenght > 0.95);
+        //   }
+        // },
+        
+        {
+          method: "palmVelocity",
+          validator: function( v ){
+            var threshold = 10;
+            return (
+              Math.abs(v[0]) > threshold ||
+              Math.abs(v[1]) > threshold ||
+              Math.abs(v[2]) > threshold
+            );
+          }
+        },
+      ],
+      
+      [
+        
+        // {
+        //   method: "pinchStrength",
+        //   validator: function( strenght ){
+        //     return (strenght > 0.95);
+        //   }
+        // },
+        
+        {
+          method: "palmVelocity",
+          validator: function( v ){
+            var threshold = 10;
+            return (
+              Math.abs(v[0]) > threshold ||
+              Math.abs(v[1]) > threshold ||
+              Math.abs(v[2]) > threshold
+            );
+          }
+        },
+      ]
+    ],
+    
+    // callback
+    function( hands ){
+      handSpheres[0].position.set(
+        hands[0].stabilizedPalmPosition[0],
+        hands[0].stabilizedPalmPosition[1],
+        hands[0].stabilizedPalmPosition[2]
+      )
+      
+      handSpheres[1].position.set(
+        hands[1].stabilizedPalmPosition[0],
+        hands[1].stabilizedPalmPosition[1],
+        hands[1].stabilizedPalmPosition[2]
+      )
+    },
+    {
+      blocking: false
+    }
+  )
+  
+  
+  lmg.addRule(
+    // rule
+    [
+      [
+        {
+          method: "pinchStrength",
+          validator: function( s ){
+            return s > 0.5;
+          }
+        },
+      ],
+      
+      [
+        {
+          method: "pinchStrength",
+          validator: function( s ){
+            return s > 0.5;
+          }
+        },
+      ]
+    ],
+    
+    // callback
+    function( hands ){
+      
+      handSpheres[ 0 ].material.opacity = 1;
+      handSpheres[ 1 ].material.opacity = 1;
+      
+      handLine.geometry.vertices[0].x = hands[0].stabilizedPalmPosition[0]
+      handLine.geometry.vertices[0].y = hands[0].stabilizedPalmPosition[1]
+      handLine.geometry.vertices[0].z = hands[0].stabilizedPalmPosition[2]
+      
+      handLine.geometry.vertices[1].x = hands[1].stabilizedPalmPosition[0]
+      handLine.geometry.vertices[1].y = hands[1].stabilizedPalmPosition[1]
+      handLine.geometry.vertices[1].z = hands[1].stabilizedPalmPosition[2]
+      
+      handLine.geometry.verticesNeedUpdate = true;
+      handLine.visible = true;
+
+    },
+    
+    {
+      blocking: false
+    }
+  )
+  
+  
+  
+  lmg.start();
+
+  </script>
+</body>
+</html>

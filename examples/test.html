@@ -27,7 +27,6 @@
           {
             method: "palmVelocity",
             validator: function( v ){
-              //console.log( v );
               var velocityThresh = 150; // mm/sec
               return (v[0] > velocityThresh || v[2] > velocityThresh) && (v[1] < velocityThresh);
             }
@@ -38,6 +37,60 @@
       // callback
       function(){
         console.log("hovering big hand");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [ // hand 1
+          {
+            method: "point",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "palmVelocity",
+            validator: function( v ){
+              var thresh = 300;
+              return (
+                Math.abs( v[0] > thresh ) ||
+                Math.abs( v[1] > thresh ) ||
+                Math.abs( v[2] > thresh )
+              );
+            }
+          }
+        ],
+        
+        [ // hand 2
+          {
+            method: "point",
+            validator: function( v ){
+              return v;
+            }
+          },
+
+          {
+            method: "palmVelocity",
+            validator: function( v ){
+              var thresh = 300;
+              return (
+                Math.abs( v[0] > thresh ) ||
+                Math.abs( v[1] > thresh ) ||
+                Math.abs( v[2] > thresh )
+              );
+            }
+          }
+        ]
+        
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("DOUBLE PEW!");
       }
     )
     
@@ -93,7 +146,7 @@
       
       // callback
       function(){
-        console.log("Big angle!");
+        //console.log("Big angle!");
       }
     )
     

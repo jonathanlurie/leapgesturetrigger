@@ -9494,7 +9494,8 @@ var handGesture = [
       // Each validator must return a boolean. Here, it is a simple relay
       validator: function( b ){
         return b;
-      }
+      },
+      args: [] // optional, it he method needs argument, they must be here as an array
     },
 
     // test #2 of hand #1
@@ -9516,9 +9517,93 @@ var handGesture = [
   [ ... ]
 ]
  
+When a rule's callback is called, the array of hands is given in argument.
+If the rule involves both hands, they will always be ordered [left, right]
+ 
 */
-class LeapGestureTrigger {
 
+
+
+class LeapGestureTrigger {
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when the index finger is extended
+  * @return {Number} the code
+  */
+  static get F_POINT(){
+    return 2;
+  }
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when index finger and the thumb are extended
+  * @return {Number} the code
+  */
+  static get F_POINT_AND_THUMB(){
+    return 3;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when index finger and middel are extended
+  * @return {Number} the code
+  */
+  static get F_PEACE(){
+    return 6;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when index finger, middle and thumb are extended
+  * @return {Number} the code
+  */
+  static get F_THREE(){
+    return 7;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when the palm is closed (no finger extended)
+  * @return {Number} the code
+  */
+  static get F_FIST(){
+    return 0;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when all finder are extended (not necessary spread)
+  * @return {Number} the code
+  */
+  static get F_OPEN_PALM(){
+    return 31;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when the thumb is extended
+  * @return {Number} the code
+  */
+  static get F_THUMB_UP(){
+    return 1;
+  }
+  
+  
+  /**
+  * [STATIC]
+  * Finger gesture code when the pinky is extended
+  * @return {Number} the code
+  */
+  static get F_PINKY_UP(){
+    return 16;
+  }
+  
   
   constructor( ) {
     this._controller = null;
@@ -9527,18 +9612,23 @@ class LeapGestureTrigger {
     
     // list of gesture name based on their code
     this._fingerGesture = {
-      point          : 2,  // index finger extended
-      pointAndThumb  : 3,  // index finger and thumb extended
-      peace          : 6,  // index finger and middle finger extended
-      three          : 7,  // thum, index and middle finger extended
-      fist           : 0,  // no finger extended, close fist
-      openPalm       : 31, // all finger extended
-      thumbUp        : 1,  // only thumb extended
-      pinkyUp        : 16, // only the pinky is extended (not sure this one is practical)
+      point          : LeapGestureTrigger.F_POINT,      // index finger extended
+      pointAndThumb  : LeapGestureTrigger.F_POINT_AND_THUMB,  // index finger and thumb extended
+      peace          : LeapGestureTrigger.F_PEACE,      // index finger and middle finger extended
+      three          : LeapGestureTrigger.F_THREE,      // thum, index and middle finger extended
+      fist           : LeapGestureTrigger.F_FIST,       // no finger extended, close fist
+      openPalm       : LeapGestureTrigger.F_OPEN_PALM,  // all finger extended
+      thumbUp        : LeapGestureTrigger.F_THUMB_UP,   // only thumb extended
+      pinkyUp        : LeapGestureTrigger.F_PINKY_UP,   // only the pinky is extended (not sure this one is practical)
     };
     
     // rule are combinations of gestures + callback
     this._ruleSets = [];
+    
+    this._events = {
+      nothing: null,
+      everyFrame: null
+    };
   }
 
 
@@ -9547,9 +9637,9 @@ class LeapGestureTrigger {
   *
   * Options:
   *   - "name": String - a name for this rule
-  *   - "blocking": Boolean - if true, won't try the next rules if this one applies
+  *   - "blocking": Boolean - if true, won't try the next rules if this one applies. Default: true
   *   - "ambidextrousMono": for single-hand gesture only: can be performed by one
-  *                         or the other even though both are showing
+  *                         or the other even though both are showing. Default: true
   */
   addRule( rule, callback, options = {} ){
     if( typeof callback !== "function" ){
@@ -9567,8 +9657,8 @@ class LeapGestureTrigger {
       rule              : rule,
       callback          : callback,
       name              : options.name || "rule #" + this._ruleSets.length,
-      blocking          : options.blocking || true,
-      ambidextrousMono  : options.ambidextrousMono || true,
+      blocking          : "blocking" in options ? options.blocking : true,
+      ambidextrousMono  : "ambidextrousMono" in options ? options.ambidextrousMono : true,
     });
   }
   
@@ -9640,7 +9730,9 @@ class LeapGestureTrigger {
   }
   
   
-  _runRuleSet(){
+  _runRuleSets(){
+    var atLeastOneRuleApplied = false;
+    
     for(var i=0; i<this._ruleSets.length; i++){
       var ruleSet = this._ruleSets[i];
       var rule = ruleSet.rule;
@@ -9650,16 +9742,37 @@ class LeapGestureTrigger {
       var ambidextrousMono = ruleSet.ambidextrousMono;
       
       var applies = this._runRule( rule, ambidextrousMono );
+      atLeastOneRuleApplied |= applies;
       
       if( applies ){
-        //console.log("Valid rule: " + name);
-        callback();
+        if( this._currentFrame.hands.length == 1 ){
+          callback( this._currentFrame.hands );
+        }else{
+          var leftHand = null;
+          var rightHand = null;
+          
+          if( this._currentFrame.hands[0].type === "left" ){
+            leftHand = this._currentFrame.hands[0];
+            rightHand = this._currentFrame.hands[1];
+          }else{
+            leftHand = this._currentFrame.hands[1];
+            rightHand = this._currentFrame.hands[0];
+          }
+          
+          callback( [leftHand, rightHand] );
+        }
+        
         
         // if this rule is blocking, we dont run the other ones
         if(blocking){
           break;
         }
       }
+    }
+    
+    // not a single rule was applied, we call the "nothing" event
+    if( !atLeastOneRuleApplied && this._events.nothing ){
+      this._events.nothing();
     }
   }
   
@@ -9732,7 +9845,12 @@ class LeapGestureTrigger {
   
   _loop( frame ){
     this._currentFrame = frame;
+    
     this._nbHands = 0;
+    
+    if( this._events.everyFrame ){
+      this._events.everyFrame();
+    }
     
     // the frame must be valid
     if( !frame.valid )
@@ -9740,7 +9858,14 @@ class LeapGestureTrigger {
 
     this._nbHands = this.numberOfHands();
     
-    this._runRuleSet();
+    if( !this._nbHands ){
+      if( this._events.nothing ){
+        this._events.nothing();
+      }
+      return;
+    }
+    
+    this._runRuleSets();
     
   }
   
@@ -10158,6 +10283,16 @@ class LeapGestureTrigger {
     }
     
     
+    /**
+    * Add a custom general event. General events are not associated to a specific gesture.
+    * @param {String} eventName - name of the event
+    * @param {Function} cb - callback function
+    */
+    on( eventName, cb ){
+      if( eventName in this._events && typeof cb === "function" ){
+        this._events[ eventName ] = cb;
+      }
+    }
     
     
 } /* END of class LeapGestureTrigger */

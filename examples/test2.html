@@ -1,0 +1,269 @@
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+  <!-- importing the automatically build module -->
+  <script src="../dist/leapgesturetrigger.js"></script>
+
+  <p>Open Javascript console.</p>
+
+  <script>
+
+    // the foo object is part of our ES6MOD module
+    var lmg = new LeapGestureTrigger.LeapGestureTrigger();
+    
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "pinchStrength",
+            validator: function( strenght ){
+              return (strenght > 0.95);
+            }
+          },
+          
+          {
+            method: "palmVelocity",
+            validator: function( v ){
+              var threshold = 10;
+              return (
+                Math.abs(v[0]) > threshold ||
+                Math.abs(v[1]) > threshold ||
+                Math.abs(v[2]) > threshold
+              );
+            }
+          },
+        ],
+        
+        [
+          {
+            method: "pinchStrength",
+            validator: function( strenght ){
+              return (strenght > 0.95);
+            }
+          },
+          
+          {
+            method: "palmVelocity",
+            validator: function( v ){
+              var threshold = 10;
+              return (
+                Math.abs(v[0]) > threshold ||
+                Math.abs(v[1]) > threshold ||
+                Math.abs(v[2]) > threshold
+              );
+            }
+          },
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Pinching and moving both");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "peace",
+            validator: function( b ){
+              return b;
+            }
+          },
+          
+          {
+            method: "palmVelocity",
+            validator: function( v ){
+              var threshold = 10;
+              return (
+                v[0] > threshold ||
+                v[1] > threshold ||
+                v[2] > threshold
+              );
+            }
+          },
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Moving Peace!");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "peace",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Peace!");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "point",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Point!");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "pointAndThumb",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Point! (+thumb)");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "three",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Three!");
+      }
+    )
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "fist",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Fist!");
+      }
+    )
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "openPalm",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Open Palm!");
+      }
+    )
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "thumbUp",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Thumb Up!");
+      }
+    )
+    
+    
+    lmg.addRule(
+      // rule
+      [
+        [
+          {
+            method: "pinkyUp",
+            validator: function( b ){
+              return b;
+            }
+          }
+        ]
+      ],
+      
+      // callback
+      function( hands ){
+        console.log("Pinky Up!");
+      }
+    )
+    
+    
+    lmg.on( "nothing", function(){
+      //console.log("nothing");
+    })
+    
+    lmg.start()
+
+  </script>
+
+</body>
+</html>
