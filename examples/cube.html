@@ -99,6 +99,17 @@
   var handSpheres = [];
   var handLine = null;
   
+  var previousHandPosition = {
+    left: new THREE.Vector3(0, 0, 0),
+    right: new THREE.Vector3(0, 0, 0),
+    isValid: false
+  }
+  
+  var newHandPosition = {
+    left: new THREE.Vector3(0, 0, 0),
+    right: new THREE.Vector3(0, 0, 0),
+  }
+  
 
   function initGui(){
 
@@ -144,12 +155,43 @@
     
     var orbit = new THREE.OrbitControls( camera, renderer.domElement );
 
-    var geometry = new THREE.BoxGeometry( 10, 10, 10 );
+    var geometry = new THREE.BoxGeometry( 50, 50, 50 );
     var material = new THREE.MeshPhongMaterial({ color: 0xffaaff, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, shininess: 0	} );
     var cube = new THREE.Mesh( geometry, material );
     container.add( cube );
+    
+    // init the hand that represent the sphere
+    var sphereGeometryHint = new THREE.SphereGeometry( 10, 32, 32 );
+    
+    // adding some spheres to the the container to show orientation
+    var ySphere = new THREE.Mesh(
+      sphereGeometryHint,
+      new THREE.MeshPhongMaterial( {color: 0xFF55FF, transparent: true} )
+    );
+    
+    ySphere.position.y = 70;
+    container.add( ySphere );
+    
+    var xSphere = new THREE.Mesh(
+      sphereGeometryHint,
+      new THREE.MeshPhongMaterial( {color: 0x55FFFF, transparent: true} )
+    );
+    
+    xSphere.position.x = 70;
+    container.add( xSphere );
+    
+    var zSphere = new THREE.Mesh(
+      sphereGeometryHint,
+      new THREE.MeshPhongMaterial( {color: 0xFFFF55, transparent: true} )
+    );
+    
+    zSphere.position.z = 70;
+    container.add( zSphere );
+    
+    
+    
 
-    //scene.add( container );
+    scene.add( container );
 
     // init the hand that represent the sphere
     var sphereGeometry = new THREE.SphereGeometry( 10, 32, 32 );
@@ -207,6 +249,7 @@
     handLine.visible = false;
     handSpheres[ 0 ].material.opacity = 0.1
     handSpheres[ 1 ].material.opacity = 0.1;
+    previousHandPosition.isValid = false;
   })
 
   
@@ -220,14 +263,6 @@
     // rule
     [
       [
-        
-        // {
-        //   method: "pinchStrength",
-        //   validator: function( strenght ){
-        //     return (strenght > 0.95);
-        //   }
-        // },
-        
         {
           method: "palmVelocity",
           validator: function( v ){
@@ -242,18 +277,10 @@
       ],
       
       [
-        
-        // {
-        //   method: "pinchStrength",
-        //   validator: function( strenght ){
-        //     return (strenght > 0.95);
-        //   }
-        // },
-        
         {
           method: "palmVelocity",
           validator: function( v ){
-            var threshold = 10;
+            var threshold = 1;
             return (
               Math.abs(v[0]) > threshold ||
               Math.abs(v[1]) > threshold ||
@@ -278,6 +305,11 @@
         hands[1].stabilizedPalmPosition[2]
       )
     },
+    
+    // callback no
+    null,
+    
+    // options
     {
       blocking: false
     }
@@ -288,19 +320,33 @@
     // rule
     [
       [
-        {
+        /*{
           method: "pinchStrength",
           validator: function( s ){
             return s > 0.5;
+          }
+        },*/
+        {
+          method: "fingerExtendedCode",
+          validator: function( c ){
+            return (c == LeapGestureTrigger.LeapGestureTrigger.F_FIST) ||
+                   (c == LeapGestureTrigger.LeapGestureTrigger.F_POINT);
           }
         },
       ],
       
       [
-        {
+        /*{
           method: "pinchStrength",
           validator: function( s ){
             return s > 0.5;
+          }
+        },*/
+        {
+          method: "fingerExtendedCode",
+          validator: function( c ){
+            return (c == LeapGestureTrigger.LeapGestureTrigger.F_FIST) ||
+                   (c == LeapGestureTrigger.LeapGestureTrigger.F_POINT);
           }
         },
       ]
@@ -323,6 +369,74 @@
       handLine.geometry.verticesNeedUpdate = true;
       handLine.visible = true;
 
+      if( previousHandPosition.isValid ){
+        newHandPosition.left.set(
+          hands[0].stabilizedPalmPosition[0],
+          hands[0].stabilizedPalmPosition[1],
+          hands[0].stabilizedPalmPosition[2]
+        )
+        
+        newHandPosition.right.set(
+          hands[1].stabilizedPalmPosition[0],
+          hands[1].stabilizedPalmPosition[1],
+          hands[1].stabilizedPalmPosition[2]
+        )
+        
+        // vector going from left hand to right hand on the previous valid frame
+        var previousVector = new THREE.Vector3()
+                              .subVectors(
+                                previousHandPosition.left,
+                                previousHandPosition.right
+                              )
+                              
+        // vector going from left hand to right hand on the current frame
+        var newVector = new THREE.Vector3()
+                              .subVectors(
+                                newHandPosition.left,
+                                newHandPosition.right
+                              )
+        var previousVectorNorm = previousVector.clone().normalize();
+        var newVectorNorm = newVector.clone().normalize();
+        
+        var crossProduct = new THREE.Vector3().crossVectors( previousVectorNorm, newVectorNorm )
+        var cos = dotProduct = previousVectorNorm.dot( newVectorNorm )
+        var sin = crossProduct.length();
+        var unsignedAngle = Math.acos(cos)
+        
+        
+        console.log( "------------------" );
+        console.log( crossProduct );
+        //console.log( dotProduct );
+        //console.log( Math.asin(crossProduct.length()) );
+        //console.log( Math.acos(dotProduct) );
+        console.log( unsignedAngle );
+        
+        if( crossProduct.x == 0 && crossProduct.y == 0 && crossProduct.z == 0 ){
+          
+        }else{
+          // container.rotateOnAxis( crossProduct.normalize(), unsignedAngle );
+          // container.rotateOnAxis(crossProduct.applyQuaternion( container.quaternion ).normalize(), unsignedAngle );
+          container.rotateOnAxis( container.worldToLocal( crossProduct ).normalize(), unsignedAngle );
+        }
+        
+        
+      }
+
+      previousHandPosition.left.copy( newHandPosition.left )
+      previousHandPosition.right.copy( newHandPosition.right )
+      previousHandPosition.isValid = true
+      
+      
+      if( isNaN(container.rotation._x) || isNaN(container.rotation._y) || isNaN(container.rotation._z) ){
+        console.log("NaN");
+      }
+    },
+    
+    // callback No
+    function(){
+      //handLine.geometry.verticesNeedUpdate = true;
+      handLine.visible = false;
+      previousHandPosition.isValid = false;
     },
     
     {
@@ -333,6 +447,7 @@
   
   
   lmg.start();
+
 
   </script>
 </body>

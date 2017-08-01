@@ -9634,16 +9634,23 @@ class LeapGestureTrigger {
 
   /**
   * Add a rule and associate a callback. See the header of this file to know what is a rule.
-  *
-  * Options:
+  * @param {Object} rule - the rule (see format on the header of this file)
+  * @param {Function} callback - to call when the rule is detected
+  * @param {Function} callbackNo - to call when this rule was not detected (can be null)
+  * @param {Object} options -
   *   - "name": String - a name for this rule
   *   - "blocking": Boolean - if true, won't try the next rules if this one applies. Default: true
   *   - "ambidextrousMono": for single-hand gesture only: can be performed by one
   *                         or the other even though both are showing. Default: true
   */
-  addRule( rule, callback, options = {} ){
+  addRule( rule, callback, callbackNo, options = {} ){
     if( typeof callback !== "function" ){
       console.warn("The rule callback must be a function");
+      return;
+    }
+    
+    if(  callbackNo && typeof callbackNo !== "function" ){
+      console.warn("The callback for not trigering the rule must be a function when not null.");
       return;
     }
     
@@ -9656,6 +9663,7 @@ class LeapGestureTrigger {
     this._ruleSets.push({
       rule              : rule,
       callback          : callback,
+      callbackNo        : callbackNo,
       name              : options.name || "rule #" + this._ruleSets.length,
       blocking          : "blocking" in options ? options.blocking : true,
       ambidextrousMono  : "ambidextrousMono" in options ? options.ambidextrousMono : true,
@@ -9737,6 +9745,7 @@ class LeapGestureTrigger {
       var ruleSet = this._ruleSets[i];
       var rule = ruleSet.rule;
       var callback = ruleSet.callback;
+      var callbackNo = ruleSet.callbackNo;
       var name = ruleSet.name;
       var blocking = ruleSet.blocking;
       var ambidextrousMono = ruleSet.ambidextrousMono;
@@ -9767,6 +9776,8 @@ class LeapGestureTrigger {
         if(blocking){
           break;
         }
+      }else if( callbackNo ){
+        callbackNo();
       }
     }
     
